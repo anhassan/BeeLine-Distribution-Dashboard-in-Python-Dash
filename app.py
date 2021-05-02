@@ -41,18 +41,15 @@ app.layout = html.Div([
         marks={str(year): str(year) for year in df['Year'].unique()},
         step=None
     ),
-
     dbc.Row([
         dbc.Col(dcc.Graph(id='graph-with-slider'), width=6),
         dbc.Col(dcc.Graph(id='yearly-bar-distribution'), width=6)
     ]),
-
     dbc.Row([
         dbc.Col(dcc.Graph(id='state-pie-with-slider'), width=5),
         dbc.Col(dcc.Graph(id='cause-pie-with-slider'), width=5)
     ])
 ])
-
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Connect the Plotly graphs with Dash Components
@@ -74,7 +71,6 @@ def render_figures(year_selected):
            update_pie_chart(states_df, 'State', title_states) \
         , update_pie_chart(causes_df, 'Affected by', title_causes)
 
-
 # ----------------------------------------------------------------------------------------------------------------------
 # Utility Functions for Filter Transformations
 def get_most_impacted_states(year_selected, df, num_states):
@@ -90,15 +86,12 @@ def get_most_impactful_causes(year_selected, df, num_causes):
         by='Pct of Colonies Impacted', ascending=False).round(2)
     return df_cause_sorted.head(num_causes)
 
-
 def get_year_wise(year_selected, df):
     return df[df['Year'] == year_selected].round(2)
-
 
 def summarize_year_wise(df):
     df_yearly = df.copy()
     return df.groupby(by='Year').mean().reset_index().sort_values(by='Year').round(2)
-
 
 # Utility Functions for Building Visualizations
 def update_choropleth_map(df):
@@ -115,7 +108,6 @@ def update_choropleth_map(df):
                         height=600
                         )
     return fig
-
 
 def update_bar_chart(df):
     fig = px.bar(data_frame=df,
@@ -140,6 +132,6 @@ def update_pie_chart(df, feature, title):
                  )
     return fig
 
-
 if __name__ == "__main__":
     app.run_server(port=4500)
+
