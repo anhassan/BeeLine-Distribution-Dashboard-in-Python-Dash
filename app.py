@@ -122,7 +122,6 @@ def update_bar_chart(df):
     fig.update_traces(texttemplate='%{text:.3s}', textposition='outside')
     return fig
 
-
 def update_pie_chart(df, feature, title):
     fig = px.pie(data_frame=df,
                  title=title,
