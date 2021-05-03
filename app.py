@@ -79,7 +79,6 @@ def get_most_impacted_states(year_selected, df, num_states):
         by='Pct of Colonies Impacted', ascending=False).round(2)
     return df_state_sorted.head(num_states)
 
-
 def get_most_impactful_causes(year_selected, df, num_causes):
     df_cause_sorted = df.copy()
     df_cause_sorted = df[df['Year'] == year_selected].groupby(by='Affected by').mean().reset_index().sort_values(
