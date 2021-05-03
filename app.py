@@ -28,7 +28,7 @@ app.layout = html.Div([
             ),
             html.Hr(className="my-2"),
             html.P(
-                "Wild life is essential for a healthy society"
+                "Wild life is essential for a healthy society. "
                 "Lets start preserving nature with a step towards helping beeline revival"
             )
         ]
