@@ -51,6 +51,7 @@ app.layout = html.Div([
     ])
 ])
 
+
 # ----------------------------------------------------------------------------------------------------------------------
 # Connect the Plotly graphs with Dash Components
 @app.callback(
@@ -63,6 +64,7 @@ app.layout = html.Div([
 def render_figures(year_selected):
     title_states = 'States With Most Effected Bee Population'
     title_causes = 'Causes of Decline in Bee Line Distribution'
+
     selected_year_df = get_year_wise(year_selected, df)
     summarized_df = summarize_year_wise(df)
     states_df = get_most_impacted_states(year_selected, df, 5)
@@ -70,6 +72,7 @@ def render_figures(year_selected):
     return update_choropleth_map(selected_year_df), update_bar_chart(summarized_df), \
            update_pie_chart(states_df, 'State', title_states) \
         , update_pie_chart(causes_df, 'Affected by', title_causes)
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Utility Functions for Filter Transformations
@@ -79,18 +82,22 @@ def get_most_impacted_states(year_selected, df, num_states):
         by='Pct of Colonies Impacted', ascending=False).round(2)
     return df_state_sorted.head(num_states)
 
+
 def get_most_impactful_causes(year_selected, df, num_causes):
     df_cause_sorted = df.copy()
     df_cause_sorted = df[df['Year'] == year_selected].groupby(by='Affected by').mean().reset_index().sort_values(
         by='Pct of Colonies Impacted', ascending=False).round(2)
     return df_cause_sorted.head(num_causes)
 
+
 def get_year_wise(year_selected, df):
     return df[df['Year'] == year_selected].round(2)
+
 
 def summarize_year_wise(df):
     df_yearly = df.copy()
     return df.groupby(by='Year').mean().reset_index().sort_values(by='Year').round(2)
+
 
 # Utility Functions for Building Visualizations
 def update_choropleth_map(df):
@@ -108,6 +115,7 @@ def update_choropleth_map(df):
                         )
     return fig
 
+
 def update_bar_chart(df):
     fig = px.bar(data_frame=df,
                  title='Yearly Percentage Decrease in Bee Line Colonies Across USA',
@@ -121,6 +129,7 @@ def update_bar_chart(df):
     fig.update_traces(texttemplate='%{text:.3s}', textposition='outside')
     return fig
 
+
 def update_pie_chart(df, feature, title):
     fig = px.pie(data_frame=df,
                  title=title,
@@ -130,6 +139,6 @@ def update_pie_chart(df, feature, title):
                  )
     return fig
 
+
 if __name__ == "__main__":
     app.run_server(port=4500)
-
